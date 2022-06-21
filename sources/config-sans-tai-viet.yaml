@@ -1,0 +1,8 @@
+buildVariable: false
+familyName: Noto Sans Tai Viet
+googleFonts: true
+includeSubsets:
+- from: Noto Sans
+  name: GF_Latin_Core
+sources:
+- NotoSansTaiViet.designspace
