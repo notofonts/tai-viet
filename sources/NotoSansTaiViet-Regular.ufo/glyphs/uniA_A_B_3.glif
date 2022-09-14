@@ -45,7 +45,7 @@
 			<point x="-451" y="842"/>
 		</contour>
 	</outline>
-	<anchor name="anchor" x="-333" y="620"/>
+	<anchor name="_top" x="-333" y="620"/>
 	<lib>
 		<dict>
 			<key>com.schriftgestaltung.Glyphs.lastChange</key>
