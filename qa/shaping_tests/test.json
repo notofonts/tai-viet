@@ -1,0 +1,14 @@
+{
+    "tests": [
+        {
+            "expectation": "uniAAA0=0+674|uniAAC1=0@-1,141+0|uniAA87=2+659|uniAAC1=2@44,0+0|uniAAB1=4+315|uniAAB2=4@164,0+0|uniAAA1=6+972|uniAAB7=6@-220,0+0|uniAAAB=8+611|uniAAB8=8@63,0+0",
+            "input": "ꪠ꫁ꪇ꫁ꪱꪲꪡꪷꪫꪸ",
+            "note": "Added by SIESTA"
+        },
+        {
+            "expectation": "uniAA8E=0+613|uniAABE=0@41,0+0|uniAAA1=2+972|uniAAB4=2@-154,0+0|uniAA87=4+659|uniAABF=4@-92,0+0|uniAA87=6+659|uniAAB2=6@-4,0+0",
+            "input": "ꪎꪾꪡꪴꪇ꪿ꪇꪲ",
+            "note": "Added by SIESTA"
+        }
+    ]
+}
