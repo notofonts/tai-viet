@@ -1,5 +1,8 @@
 {
-.appVersion = "1057";
+.appVersion = "3195";
+DisplayStrings = (
+"/uniAAB6"
+);
 copyright = "Copyright 2022 The Noto Project Authors (https://github.com/notofonts/tai-viet)";
 customParameters = (
 {
@@ -91,6 +94,35 @@ uni25CC
 );
 },
 {
+name = unicodeRanges;
+value = (
+0,
+1,
+29,
+31,
+45
+);
+},
+{
+name = "Has WWS Names";
+value = 1;
+},
+{
+name = fsType;
+value = (
+);
+},
+{
+name = codePageRanges;
+value = (
+1252
+);
+},
+{
+name = "Use Typo Metrics";
+value = 1;
+},
+{
 name = description;
 value = "Designed by Monotype design team.";
 },
@@ -107,41 +139,12 @@ name = vendorID;
 value = GOOG;
 },
 {
-name = unicodeRanges;
-value = (
-0,
-1,
-29,
-31,
-45
-);
-},
-{
 name = trademark;
 value = "Noto is a trademark of Google Inc.";
 },
 {
-name = "Has WWS Names";
-value = 1;
-},
-{
 name = versionString;
 value = "Version 2.003";
-},
-{
-name = fsType;
-value = (
-);
-},
-{
-name = codePageRanges;
-value = (
-1252
-);
-},
-{
-name = "Use Typo Metrics";
-value = 1;
 }
 );
 date = "2017-06-20 16:21:02 +0000";
@@ -1232,13 +1235,13 @@ unicode = AA89;
 },
 {
 glyphname = uniAA8A;
-lastChange = "2017-09-11 14:36:03 +0000";
+lastChange = "2023-06-09 12:14:31 +0000";
 layers = (
 {
 anchors = (
 {
 name = Anchor2;
-position = "{263, 620}";
+position = "{280, 770}";
 },
 {
 name = Anchor4;
@@ -1391,13 +1394,13 @@ unicode = AA8B;
 },
 {
 glyphname = uniAA8C;
-lastChange = "2017-09-11 14:36:03 +0000";
+lastChange = "2023-06-09 12:14:38 +0000";
 layers = (
 {
 anchors = (
 {
 name = Anchor2;
-position = "{263, 620}";
+position = "{226, 922}";
 },
 {
 name = Anchor4;
@@ -1496,13 +1499,13 @@ unicode = AA8C;
 },
 {
 glyphname = uniAA8D;
-lastChange = "2017-09-11 14:36:03 +0000";
+lastChange = "2023-06-09 12:14:45 +0000";
 layers = (
 {
 anchors = (
 {
 name = Anchor2;
-position = "{263, 620}";
+position = "{226, 922}";
 },
 {
 name = Anchor4;
@@ -2881,13 +2884,13 @@ unicode = AA9D;
 },
 {
 glyphname = uniAA9E;
-lastChange = "2017-09-11 14:36:03 +0000";
+lastChange = "2023-06-09 12:14:25 +0000";
 layers = (
 {
 anchors = (
 {
 name = Anchor2;
-position = "{292, 761}";
+position = "{292, 935}";
 },
 {
 name = Anchor4;
@@ -3560,13 +3563,13 @@ unicode = AAA3;
 },
 {
 glyphname = uniAAA4;
-lastChange = "2017-09-11 14:36:03 +0000";
+lastChange = "2023-06-09 12:15:03 +0000";
 layers = (
 {
 anchors = (
 {
 name = Anchor2;
-position = "{292, 761}";
+position = "{303, 746}";
 },
 {
 name = Anchor4;
@@ -4927,13 +4930,13 @@ unicode = AAB5;
 },
 {
 glyphname = uniAAB6;
-lastChange = "2017-09-11 14:36:03 +0000";
+lastChange = "2023-06-09 12:15:09 +0000";
 layers = (
 {
 anchors = (
 {
 name = Anchor2;
-position = "{195, 620}";
+position = "{156, 815}";
 }
 );
 layerId = UUID0;
@@ -6808,10 +6811,6 @@ instances = (
 {
 customParameters = (
 {
-name = weightClass;
-value = 400;
-},
-{
 name = panose;
 value = (
 2,
@@ -6869,7 +6868,6 @@ UUID0 = 1;
 name = Regular;
 }
 );
-keyboardIncrement = 0;
 manufacturer = "Monotype Imaging Inc.";
 manufacturerURL = "http://www.google.com/get/noto/";
 unitsPerEm = 1000;
