@@ -1,8 +1,5 @@
 {
 .appVersion = "3195";
-DisplayStrings = (
-"/uniAAB6"
-);
 copyright = "Copyright 2022 The Noto Project Authors (https://github.com/notofonts/tai-viet)";
 customParameters = (
 {
@@ -319,52 +316,6 @@ width = 260;
 }
 );
 unicode = 00A0;
-},
-{
-glyphname = uniA78B;
-lastChange = "2017-09-11 14:36:03 +0000";
-layers = (
-{
-layerId = UUID0;
-paths = (
-{
-closed = 1;
-nodes = (
-"201 329 LINE",
-"226 729 LINE",
-"115 729 LINE",
-"140 329 LINE"
-);
-}
-);
-width = 326;
-}
-);
-note = uniA78C;
-unicode = A78B;
-},
-{
-glyphname = uniA78C;
-lastChange = "2017-09-11 14:36:03 +0000";
-layers = (
-{
-layerId = UUID0;
-paths = (
-{
-closed = 1;
-nodes = (
-"201 471 LINE",
-"226 729 LINE",
-"115 729 LINE",
-"140 471 LINE"
-);
-}
-);
-width = 326;
-}
-);
-note = uniA78C;
-unicode = A78C;
 },
 {
 glyphname = uniAA80;
@@ -5262,13 +5213,13 @@ unicode = AABB;
 },
 {
 glyphname = uniAABC;
-lastChange = "2017-09-11 14:36:03 +0000";
+lastChange = "2023-06-09 12:15:15 +0000";
 layers = (
 {
 anchors = (
 {
 name = Anchor2;
-position = "{216, 976}";
+position = "{216, 1006}";
 }
 );
 layerId = UUID0;
