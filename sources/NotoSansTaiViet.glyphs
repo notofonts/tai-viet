@@ -1,5 +1,11 @@
 {
 .appVersion = "3195";
+classes = (
+{
+code = "uniAA9C\012uniAA9D\012uniAA9E\012uniAA9F\012uniAAA1\012uniAAA4\012";
+name = PokesOutRight;
+}
+);
 copyright = "Copyright 2022 The Noto Project Authors (https://github.com/notofonts/tai-viet)";
 customParameters = (
 {
@@ -160,6 +166,10 @@ features = (
 {
 code = "# Automatic Code Start\012";
 name = mark;
+},
+{
+code = "pos @PokesOutRight' 250 [uniAA9C uniAA9E uniAAA4] [uniAAB3];\012pos @PokesOutRight' 150 [uniAA9C uniAA9E uniAAA4] [uniAAB8];\012pos @PokesOutRight' 250 [uniAAB3 uniAAB8] [uniAA9C uniAA9E uniAAA4] [uniAAB3];\012pos @PokesOutRight' 150 [uniAAB3 uniAAB8] [uniAA9C uniAA9E uniAAA4] [uniAAB8];\012";
+name = dist;
 }
 );
 fontMaster = (
@@ -2835,13 +2845,13 @@ unicode = AA9D;
 },
 {
 glyphname = uniAA9E;
-lastChange = "2023-06-09 12:14:25 +0000";
+lastChange = "2023-06-09 12:24:52 +0000";
 layers = (
 {
 anchors = (
 {
 name = Anchor2;
-position = "{292, 935}";
+position = "{224, 803}";
 },
 {
 name = Anchor4;
@@ -2968,13 +2978,13 @@ unicode = AA9E;
 },
 {
 glyphname = uniAA9F;
-lastChange = "2017-09-11 14:36:03 +0000";
+lastChange = "2023-06-09 12:25:56 +0000";
 layers = (
 {
 anchors = (
 {
 name = Anchor2;
-position = "{419, 620}";
+position = "{459, 620}";
 },
 {
 name = Anchor4;
@@ -3514,13 +3524,13 @@ unicode = AAA3;
 },
 {
 glyphname = uniAAA4;
-lastChange = "2023-06-09 12:15:03 +0000";
+lastChange = "2023-06-09 12:22:05 +0000";
 layers = (
 {
 anchors = (
 {
 name = Anchor2;
-position = "{303, 746}";
+position = "{307, 722}";
 },
 {
 name = Anchor4;
