@@ -1,8 +1,8 @@
 {
-.appVersion = "3195";
+.appVersion = "3202";
 classes = (
 {
-code = "uniAA9C\012uniAA9D\012uniAA9E\012uniAA9F\012uniAAA1\012uniAAA4\012";
+code = "uniAA9D\012uniAA9F\012uniAA9C\012uniAAA4\012uniAA8F\012uniAAA1\012uniAAB6\012uniAA8B\012uniAA9E\012uniAAA0\012";
 name = PokesOutRight;
 }
 );
