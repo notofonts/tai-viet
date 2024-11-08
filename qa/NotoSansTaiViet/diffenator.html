@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Diffenator3</title>
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+		crossorigin="anonymous"></script>
+	<style type="text/css">
+		@font-face {
+      font-family: "Font Before";
+      src: url();
+    }
+
+    @font-face {
+      font-family: "Font After";
+      src: url();
+    }
+
+    .font-before, .font-after {
+      font-variation-settings: "wght" 400, "wdth" 100;
+    }
+
+    .font-before {
+      font-family: "Font Before", "Adobe Notdef";
+    }
+
+    .font-after {
+      font-family: "Font After", "Adobe Notdef";
+    }
+
+	:root {
+	--node-pt-size: 40px;
+	}
+
+	@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+    background-color: #b3d4f5 !important;
+    font-family: "Montserrat", sans-serif !important;
+}
+
+.nav-pills .nav-item.show .nav-link, .nav-pills .nav-link.active {
+    background-color: #ced9e4 !important;
+}
+.nav-item {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 2px;
+}
+
+.nav-pills .nav-link{
+    background-color: #9fcaf5 !important;
+}
+h4 {
+    color: #6f7882 !important;
+}
+
+@font-face {
+    font-family: "Adobe NotDef";
+    src: url(https://cdn.jsdelivr.net/gh/adobe-fonts/adobe-notdef/AND-Regular.ttf);
+}
+
+.box-title {
+    width: 100%;
+    font-size: 8pt;
+    font-weight: 700;
+    border-top: 1px solid black;
+    padding-top: 5px;
+    margin-bottom: 10pt;
+    display: block;
+}
+
+.box {
+    margin-bottom: 20pt;
+    width: 100%;
+    float: left;
+}
+
+.box-text {}
+
+#ui-nav {
+    position: fixed;
+    right: 20px;
+    z-index: 100;
+}
+
+#font-toggle {}
+
+.ui-nav-item {
+    display: block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    /* Safari */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* IE10+/Edge */
+    user-select: none;
+    /* Standard */
+    text-align: center;
+    color: white;
+    background-color: black;
+    display: block;
+    font-size: 14pt;
+    padding: 5px;
+    margin: 2px;
+}
+
+/* Stuff needed for the table differ */
+body {
+    font-family: Helvetica;
+}
+
+.node {
+    font-family: courier;
+    cursor: pointer;
+    position: relative;
+    left: 30px;
+    padding: 5px;
+    display: block;
+    border: 1px dashed grey;
+    background-color: #e9e9ee;
+}
+
+.header {
+    font-weight: bold;
+}
+
+.attr-before {
+    color: green;
+    cursor: text;
+}
+
+.attr-after {
+    color: red;
+    cursor: text;
+}
+
+.leaf {
+    font-weight: bold;
+}
+
+.old .cell .new {
+    display: none;
+}
+
+.new .cell .old {
+    display: none;
+}
+
+.both .cell .old {
+    opacity: 0.75;
+    color: red;
+}
+
+.both .cell .new {
+    opacity: 0.75;
+    position: absolute;
+    top: 0;
+    color: green;
+}
+
+.spacer {
+    display: block;
+    float: left;
+    width: 100%;
+}
+
+#ot-panel {
+    max-height: 400px;
+    overflow-y: scroll;
+    background: white;
+    padding: 10px;
+    display: none;
+   }
+
+   .cell{
+    z-index: -100;
+    float: left;
+    display: block;
+    text-align: center;
+    padding: 5pt;
+    margin: 5pt;
+    width: 50pt;
+    font-size: var(--node-pt-size);
+    line-height: calc(var(--node-pt-size) * 1.5);
+  }
+  .cell-word{
+    z-index: -100;
+    float: left;
+    display: block;
+    text-align: center;
+    padding: 5pt;
+    margin: 5pt;
+    font-size: var(--node-pt-size);
+    line-height: calc(var(--node-pt-size) * 1.5);
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  }
+  .cell-glyph{
+    z-index: -100;
+    float: left;
+    display: block;
+    text-align: center;
+    border-radius: 5pt;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    padding: 5pt;
+    margin: 5pt;
+    width: calc(var(--node-pt-size) * 2);
+    min-height: calc(var(--node-pt-size) * 2);
+    font-size: var(--node-pt-size);
+  }
+  .cell-glyph.font-before, .cell-word.font-before {
+    background: #eff6f2;
+  }
+  .cell-glyph.font-after, .cell-word.font-after {
+    background: #f7f4f4;
+  }
+
+  .cell-glyph:hover {
+    box-shadow: none;
+    background: #f0f0f5;
+  }
+  .cat-strings .cell {
+    clear: both;
+    position: static;
+    float: none;
+    text-align: left;
+  }
+  .codepoint {
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 10pt;
+    line-height: 10pt;
+  }
+  .box-title {
+    clear: both;
+  }
+  .node.closed::before {
+    content: "+";
+    margin-right: 5pt;
+  }
+  .node.open::before {
+    content: "-";
+    margin-right: 5pt;
+  }
+
+  .tooltip pre {
+    background-color: #6f7882;
+    padding: 5px;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+  .tooltip {
+    line-height: 1em;
+  }
+  .tooltip-inner {
+    max-width: 300px;
+  }
+
+  h1,h2,h3,h4,h5 {
+    clear: both;
+  }
+
+  #locationnav li {
+    white-space: wrap;
+  }
+
+  #userdefined div { width: 100%; }
+  
+/* The following rules are used in the WASM version, not in the CLI version.
+   But we keep them here so we can share them between the two versions. */
+
+   .modal-dialog {
+    max-width: 100% !important;
+    margin: 0 !important;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100vh;
+    display: flex;
+  }
+
+  .fontdrop {
+    padding: 30px;
+    border-radius: 20px;
+    outline: 3px dashed #ffffffff;
+    outline-offset: -20px;
+  }
+
+  #fontbefore {
+    background-color: #ddffdddd;
+  }
+
+  #fontafter {
+    background-color: #ffdddddd;
+  }
+
+  .dragging {
+    background-image: linear-gradient(rgb(0 0 0/5%) 0 0);
+    outline: 5px dashed #ffffffff;
+  }
+
+  #diffkerns {
+    max-height: 500px;
+    overflow-y: scroll;
+  }
+		</style>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+	integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+		<div id="ui-nav">
+		  <div class="ui-nav-item" id="fonttoggle">Old</div>
+		  <div class="ui-nav-item" id="fontanimate">Animate</div>
+		  <div id="axes">
+		  </div>
+		</div>
+	
+	<div class="row">
+		<div class="col-2">
+			<ul class="nav nav-pills" id="locationnav">
+			</ul>
+		</div>
+		<div class="col-9 mt-3">
+			<div id="title"></div>
+			<div id="cmapdiff"> </div>
+			<div id="main"></div>
+			<div id="userdefined">
+				<h4>User defined sample text</h4>
+				<div contenteditable="true" class="font-before cell-word">
+					You can type your own text here to see it previewed in the fonts.
+				</div>
+				<div style="clear: both"></div>
+			</div>
+			<div id="diffkerns"> </div>
+			<div id="difftable"> </div>
+		</div>
+	</div>
+	<script type="module">
+		function renderTableDiff(node, toplevel) {
+  var wrapper = $("<div> </div>");
+  if (!node) {
+    return wrapper;
+  }
+  if (Array.isArray(node) && node.length == 2) {
+    var before = $("<span/>");
+    before.addClass("attr-before");
+    before.html(" " + node[0] + " ");
+    var after = $("<span/>");
+    after.addClass("attr-after");
+    after.append(renderTableDiff(node[1], true).children());
+    wrapper.append(before);
+    wrapper.append(after);
+    return wrapper;
+  }
+  if (node.constructor != Object) {
+    var thing = $("<span/>");
+    thing.html(node);
+    wrapper.append(thing);
+    return wrapper;
+  }
+  for (const [key, value] of Object.entries(node)) {
+    var display = $("<div/>");
+    display.addClass("node");
+    if (!toplevel) {
+      display.hide();
+    }
+    display.append(key);
+    display.append(renderTableDiff(value, false).children());
+    if (display.children(".node").length > 0) {
+      display.addClass("closed");
+    }
+    wrapper.append(display);
+  }
+  return wrapper;
+}
+
+function addAGlyph(glyph, where) {
+  let title = "";
+  if (glyph.name) {
+    title = "name: " + glyph.name;
+  }
+  let cp =
+    "<br>U+" +
+    glyph.string.codePointAt(0).toString(16).padStart(4, "0").toUpperCase();
+  where.append(`
+        <div class="cell-glyph font-before">
+        <div data-toggle="tooltip" data-html="true" data-title="${glyph.differing_pixels} pixels"> ${glyph.string}
+        <div class="codepoint" data-toggle="tooltip" data-html="true" data-title="${title}">
+		${cp}
+        </div>
+        </div>
+    `);
+}
+
+function addAWord(diff, where) {
+  if (!diff.buffer_b) {
+    diff.buffer_b = diff.buffer_a;
+  }
+  where.append(`
+		<div class="cell-word font-before">
+		<span data-toggle="tooltip" data-html="true" data-title="Before: <pre>${diff.buffer_a}</pre>After: <pre>${diff.buffer_b}</pre><br>difference: ${diff.differing_pixels} pixels">
+		${diff.word}
+		</span>
+		</div>
+	`);
+}
+
+function diffTables(report) {
+  $("#difftable").empty();
+  $("#difftable").append(`<h4 class="mt-2 box-title">Table-level details</h4>`);
+  $("#difftable").append(
+    renderTableDiff({ tables: report["tables"] }, true).children()
+  );
+  $("#difftable .node").on("click", function (e) {
+    $(this).toggleClass("closed open");
+    $(this).children(".node").toggle();
+    e.stopPropagation();
+  });
+}
+function diffKerns(report) {
+  $("#diffkerns").empty();
+  $("#diffkerns").append(`<h4 class="mt-2">Modified Kerns</h4>`);
+  $("#diffkerns").append(
+    `<table class="table table-striped" id="diffkerns"><tr><th>Pair</th><th>Old</old><th>New</th></table>`
+  );
+  for (let [pair, value] of Object.entries(report["kerns"])) {
+    if (pair == "error") {
+      $("#diffkerns").append(`<p class="text-danger">Error: ${value}</p>`);
+      continue;
+    } else {
+      let row = $("<tr>");
+      row.append(`<td>${pair}</td>`);
+      row.append(`<td>${serializeKernBefore(value)}</td>`);
+      row.append(`<td>${serializeKernAfter(value)}</td>`);
+      $("#diffkerns table").append(row);
+    }
+  }
+}
+
+function serializeKernBefore(kern) {
+  if (Array.isArray(kern)) {
+    return serializeKern(kern[0], -1);
+  }
+  return serializeKern(kern, 0);
+}
+
+function serializeKernAfter(kern) {
+  if (Array.isArray(kern)) {
+    return serializeKern(kern[1], -1);
+  }
+  return serializeKern(kern, 1);
+}
+
+function serializeKern(kern, index) {
+  let string = "";
+  if (kern === null || kern === undefined) {
+    return "(null)";
+  }
+  if (kern.x) {
+    string += serializeKernValue(kern.x, index);
+  } else if (kern.y) {
+    string = "0";
+  }
+
+  if (kern.y) {
+    string += "," + serializeKernValue(kern.y, index);
+  }
+  if (!kern.x_placement && !kern.y_placement) {
+    return string;
+  }
+  string += "@";
+  if (kern.x_placement) {
+    string += serializeKernValue(kern.x_placement, index);
+  } else if (kern.y_placement) {
+    string += "0";
+  }
+  if (kern.y_placement) {
+    string += "," + serializeKernValue(kern.y_placement, index);
+  }
+  return string;
+}
+
+function serializeKernValue(kern, index) {
+  if (typeof kern == "number") {
+    return kern;
+  }
+  let string = "(";
+  let verybig = Object.entries(kern).length > 5;
+  for (let [key, value] of Object.entries(kern)) {
+    if (key == "default") {
+      string += value[index] + " ";
+    } else {
+      string += value[index] + "@" + key + " ";
+    }
+    if (verybig) {
+      string += "<br>";
+    }
+  }
+  return string.trim() + ")";
+}
+
+function cmapDiff(report) {
+  if (report.cmap_diff && (report.cmap_diff.new || report.cmap_diff.missing)) {
+    $("#cmapdiff").append(
+      `<h4 class="mt-2">Added and Removed Encoded Glyphs</h4>`
+    );
+    if (report["cmap_diff"]["new"]) {
+      $("#cmapdiff").append(`<h4 class="box-title">Added Glyphs</h4>`);
+      let added = $("<div>");
+      for (let glyph of report["cmap_diff"]["new"]) {
+        addAGlyph(glyph, added);
+      }
+      $("#cmapdiff").append(added);
+    }
+
+    if (report["cmap_diff"]["missing"]) {
+      $("#cmapdiff").append(`<h4 class="box-title">Removed Glyphs</h4>`);
+      let missing = $("<div>");
+      for (let glyph of report["cmap_diff"]["missing"]) {
+        addAGlyph(glyph, missing);
+      }
+      $("#cmapdiff").append(missing);
+    }
+  } else {
+    $("#cmapdiff").append(`<p>No changes to encoded glyphs</p>`);
+  }
+}
+
+function setupAnimation() {
+  $("#fonttoggle").click(function () {
+    if ($(this).text() == "Old") {
+      $(this).text("New");
+      $(".font-before").removeClass("font-before").addClass("font-after");
+    } else {
+      $(this).text("Old");
+      $(".font-after").removeClass("font-after").addClass("font-before");
+    }
+  });
+
+  let animationHandle;
+  function animate() {
+    $("#fonttoggle").click();
+    animationHandle = setTimeout(animate, 1000);
+  }
+  $("#fontanimate").click(function () {
+    if ($(this).text() == "Animate") {
+      $(this).text("Stop");
+      animate();
+    } else {
+      $(this).text("Animate");
+      clearTimeout(animationHandle);
+    }
+  });
+}
+
+export {
+  renderTableDiff,
+  addAGlyph,
+  addAWord,
+  cmapDiff,
+  diffTables,
+  diffKerns,
+  setupAnimation,
+};
+
+	var report = {"tables":{"GPOS":{"feature_list":{"abvm":{"1":[null,1]},"dist":{"0":[2,4]},"mark":{"0":[1,2],"1":[null,3]}},"lookup_list":{"0":{"0":{"marks":{"anchor_1":[{"uniAAB4":{"x":-159,"y":0}},null]},"bases":{"uniAA80":{"anchor_1":[{"x":341,"y":0},null]},"uniAA81":{"anchor_1":[{"x":317,"y":0},null]},"uniAA82":{"anchor_1":[{"x":544,"y":0},null]},"uniAA83":{"anchor_1":[{"x":468,"y":0},null]},"uniAA84":{"anchor_1":[{"x":595,"y":0},null]},"uniAA85":{"anchor_1":[{"x":246,"y":-215},null]},"uniAA86":{"anchor_1":[{"x":271,"y":-215},null]},"uniAA87":{"anchor_1":[{"x":405,"y":-215},null]},"uniAA88":{"anchor_1":[{"x":779,"y":0},null]},"uniAA89":{"anchor_1":[{"x":316,"y":0},null]},"uniAA8A":{"anchor_1":[{"x":341,"y":0},null]},"uniAA8B":{"anchor_1":[{"x":303,"y":0},null]},"uniAA8C":{"anchor_1":[{"x":360,"y":0},null]},"uniAA8D":{"anchor_1":[{"x":271,"y":-13},null]},"uniAA8E":{"anchor_1":[{"x":303,"y":0},null]},"uniAA8F":{"anchor_1":[{"x":627,"y":0},null]},"uniAA90":{"anchor_1":[{"x":487,"y":0},null]},"uniAA91":{"anchor_1":[{"x":478,"y":-215},null]},"uniAA92":{"anchor_1":[{"x":341,"y":0},null]},"uniAA93":{"anchor_1":[{"x":494,"y":0},null]},"uniAA94":{"anchor_1":[{"x":411,"y":0},null]},"uniAA95":{"anchor_1":[{"x":443,"y":0},null]},"uniAA96":{"anchor_1":[{"x":271,"y":0},null]},"uniAA97":{"anchor_1":[{"x":335,"y":-215},null]},"uniAA98":{"anchor_1":[{"x":786,"y":0},null]},"uniAA99":{"anchor_1":[{"x":341,"y":0},null]},"uniAA9A":{"anchor_1":[{"x":240,"y":0},null]},"uniAA9B":{"anchor_1":[{"x":532,"y":0},null]},"uniAA9C":{"anchor_1":[{"x":221,"y":0},null]},"uniAA9D":{"anchor_1":[{"x":379,"y":0},null]},"uniAA9E":{"anchor_1":[{"x":341,"y":0},null]},"uniAA9F":{"anchor_1":[{"x":341,"y":0},null]},"uniAAA0":{"anchor_1":[{"x":354,"y":0},null]},"uniAAA1":{"anchor_1":[{"x":659,"y":0},null]},"uniAAA2":{"anchor_1":[{"x":760,"y":0},null]},"uniAAA3":{"anchor_1":[{"x":398,"y":0},null]},"uniAAA4":{"anchor_1":[{"x":240,"y":0},null]},"uniAAA5":{"anchor_1":[{"x":233,"y":0},null]},"uniAAA6":{"anchor_1":[{"x":443,"y":0},null]},"uniAAA7":{"anchor_1":[{"x":411,"y":0},null]},"uniAAA8":{"anchor_1":[{"x":430,"y":0},null]},"uniAAA9":{"anchor_1":[{"x":322,"y":0},null]},"uniAAAA":{"anchor_1":[{"x":830,"y":0},null]},"uniAAAB":{"anchor_1":[{"x":278,"y":0},null]},"uniAAAC":{"anchor_1":[{"x":443,"y":0},null]},"uniAAAD":{"anchor_1":[{"x":379,"y":0},null]},"uniAAAE":{"anchor_1":[{"x":271,"y":0},null]},"uniAAAF":{"anchor_1":[{"x":278,"y":0},null]}}}},"1":{"0":{"marks":{"anchor_0":{"uniAAB0":[{"x":-342,"y":620},null],"uniAAB2":[{"x":-333,"y":620},null],"uniAAB3":[{"x":-333,"y":620},null],"uniAAB7":[{"x":-333,"y":620},null],"uniAAB8":[{"x":-333,"y":620},null],"uniAABE":[{"x":-313,"y":620},null],"uniAABF":[{"x":-245,"y":620},null],"uniAAC1":[{"x":-381,"y":620},null],"uniAAB4":[null,{"x":-159,"y":0}]},"anchor_1":[{"uniAAB4":{"x":-159,"y":0}},null]},"bases":{"uni25CC":[{"anchor_0":{"x":305,"y":620},"anchor_1":{"x":278,"y":0}},null],"uniAA80":[null,{"anchor_0":{"x":341,"y":0}}],"uniAA81":[null,{"anchor_0":{"x":317,"y":0}}],"uniAA82":[null,{"anchor_0":{"x":544,"y":0}}],"uniAA83":[null,{"anchor_0":{"x":468,"y":0}}],"uniAA84":[null,{"anchor_0":{"x":595,"y":0}}],"uniAA85":[null,{"anchor_0":{"x":246,"y":-215}}],"uniAA86":[null,{"anchor_0":{"x":271,"y":-215}}],"uniAA87":[null,{"anchor_0":{"x":405,"y":-215}}],"uniAA88":[null,{"anchor_0":{"x":779,"y":0}}],"uniAA89":[null,{"anchor_0":{"x":316,"y":0}}],"uniAA8A":[null,{"anchor_0":{"x":341,"y":0}}],"uniAA8B":[null,{"anchor_0":{"x":303,"y":0}}],"uniAA8C":[null,{"anchor_0":{"x":360,"y":0}}],"uniAA8D":[null,{"anchor_0":{"x":271,"y":-13}}],"uniAA8E":[null,{"anchor_0":{"x":303,"y":0}}],"uniAA8F":[null,{"anchor_0":{"x":627,"y":0}}],"uniAA90":[null,{"anchor_0":{"x":487,"y":0}}],"uniAA91":[null,{"anchor_0":{"x":478,"y":-215}}],"uniAA92":[null,{"anchor_0":{"x":341,"y":0}}],"uniAA93":[null,{"anchor_0":{"x":494,"y":0}}],"uniAA94":[null,{"anchor_0":{"x":411,"y":0}}],"uniAA95":[null,{"anchor_0":{"x":443,"y":0}}],"uniAA96":[null,{"anchor_0":{"x":271,"y":0}}],"uniAA97":[null,{"anchor_0":{"x":335,"y":-215}}],"uniAA98":[null,{"anchor_0":{"x":786,"y":0}}],"uniAA99":[null,{"anchor_0":{"x":341,"y":0}}],"uniAA9A":[null,{"anchor_0":{"x":240,"y":0}}],"uniAA9B":[null,{"anchor_0":{"x":532,"y":0}}],"uniAA9C":[null,{"anchor_0":{"x":221,"y":0}}],"uniAA9D":[null,{"anchor_0":{"x":379,"y":0}}],"uniAA9E":[null,{"anchor_0":{"x":341,"y":0}}],"uniAA9F":[null,{"anchor_0":{"x":341,"y":0}}],"uniAAA0":[null,{"anchor_0":{"x":354,"y":0}}],"uniAAA1":[null,{"anchor_0":{"x":659,"y":0}}],"uniAAA2":[null,{"anchor_0":{"x":760,"y":0}}],"uniAAA3":[null,{"anchor_0":{"x":398,"y":0}}],"uniAAA4":[null,{"anchor_0":{"x":240,"y":0}}],"uniAAA5":[null,{"anchor_0":{"x":233,"y":0}}],"uniAAA6":[null,{"anchor_0":{"x":443,"y":0}}],"uniAAA7":[null,{"anchor_0":{"x":411,"y":0}}],"uniAAA8":[null,{"anchor_0":{"x":430,"y":0}}],"uniAAA9":[null,{"anchor_0":{"x":322,"y":0}}],"uniAAAA":[null,{"anchor_0":{"x":830,"y":0}}],"uniAAAB":[null,{"anchor_0":{"x":278,"y":0}}],"uniAAAC":[null,{"anchor_0":{"x":443,"y":0}}],"uniAAAD":[null,{"anchor_0":{"x":379,"y":0}}],"uniAAAE":[null,{"anchor_0":{"x":271,"y":0}}],"uniAAAF":[null,{"anchor_0":{"x":278,"y":0}}]}}},"2":{"0":{"type":["chained_sequence_context","mark_to_base"],"rules":[["[uniAA9C uniAA9D uniAA9E uniAA9F uniAAA1 uniAAA4]' lookup lookup_3 [uniAA9C uniAA9E uniAAA4] uniAAB3"],null],"marks":[null,{"anchor_0":{"uniAAB0":{"x":-342,"y":620},"uniAAB2":{"x":-333,"y":620},"uniAAB3":{"x":-333,"y":620},"uniAAB7":{"x":-333,"y":620},"uniAAB8":{"x":-333,"y":620},"uniAABE":{"x":-313,"y":620},"uniAABF":{"x":-245,"y":620},"uniAAC1":{"x":-381,"y":620}}}],"bases":[null,{"uni25CC":{"anchor_0":{"x":305,"y":620}}}]},"1":[{"type":"chained_sequence_context","rules":["[uniAA9C uniAA9D uniAA9E uniAA9F uniAAA1 uniAAA4]' lookup lookup_4 [uniAA9C uniAA9E uniAAA4] uniAAB8"]},null],"2":[{"type":"chained_sequence_context","rules":["[uniAA9C uniAA9D uniAA9E uniAA9F uniAAA1 uniAAA4]' lookup lookup_3 [uniAAB3 uniAAB8] [uniAA9C uniAA9E uniAAA4] uniAAB3"]},null],"3":[{"type":"chained_sequence_context","rules":["[uniAA9C uniAA9D uniAA9E uniAA9F uniAAA1 uniAAA4]' lookup lookup_4 [uniAAB3 uniAAB8] [uniAA9C uniAA9E uniAAA4] uniAAB8"]},null]},"3":{"0":{"type":["single","mark_to_base"],"uniAA9C":[{"x":250},null],"uniAA9D":[{"x":250},null],"uniAA9E":[{"x":250},null],"uniAA9F":[{"x":250},null],"uniAAA1":[{"x":250},null],"uniAAA4":[{"x":250},null],"marks":[null,{"anchor_0":{"uniAAB4":{"x":-159,"y":0}}}],"bases":[null,{"uni25CC":{"anchor_0":{"x":278,"y":0}}}]}},"4":{"0":{"type":["single","chained_sequence_context"],"uniAA9C":[{"x":150},null],"uniAA9D":[{"x":150},null],"uniAA9E":[{"x":150},null],"uniAA9F":[{"x":150},null],"uniAAA1":[{"x":150},null],"uniAAA4":[{"x":150},null],"rules":[null,["[uniAA8B uniAA8F uniAA9C uniAA9D uniAA9E uniAA9F uniAAA0 uniAAA1 uniAAA4 uniAAB6]' lookup lookup_5 [uniAA9C uniAA9E uniAAA4] uniAAB3"]]},"1":[null,{"type":"chained_sequence_context","rules":["[uniAA8B uniAA8F uniAA9C uniAA9D uniAA9E uniAA9F uniAAA0 uniAAA1 uniAAA4 uniAAB6]' lookup lookup_6 [uniAA9C uniAA9E uniAAA4] uniAAB8"]}],"2":[null,{"type":"chained_sequence_context","rules":["[uniAA8B uniAA8F uniAA9C uniAA9D uniAA9E uniAA9F uniAAA0 uniAAA1 uniAAA4 uniAAB6]' lookup lookup_5 [uniAAB3 uniAAB8] [uniAA9C uniAA9E uniAAA4] uniAAB3"]}],"3":[null,{"type":"chained_sequence_context","rules":["[uniAA8B uniAA8F uniAA9C uniAA9D uniAA9E uniAA9F uniAAA0 uniAAA1 uniAAA4 uniAAB6]' lookup lookup_6 [uniAAB3 uniAAB8] [uniAA9C uniAA9E uniAAA4] uniAAB8"]}]},"5":[null,[{"type":"single","uniAA8B":{"x":250},"uniAA8F":{"x":250},"uniAA9C":{"x":250},"uniAA9D":{"x":250},"uniAA9E":{"x":250},"uniAA9F":{"x":250},"uniAAA0":{"x":250},"uniAAA1":{"x":250},"uniAAA4":{"x":250},"uniAAB6":{"x":250}}]],"6":[null,[{"type":"single","uniAA8B":{"x":150},"uniAA8F":{"x":150},"uniAA9C":{"x":150},"uniAA9D":{"x":150},"uniAA9E":{"x":150},"uniAA9F":{"x":150},"uniAAA0":{"x":150},"uniAAA1":{"x":150},"uniAAA4":{"x":150},"uniAAB6":{"x":150}}]]}},"head":{"checksum_adjustment":[4267528892,3559213418],"modified":[3770189765,3813911112]},"hhea":{"caret_slope_rise":[1,1000]}},"cmap_diff":{},"locations":[{"location":"Default","words":{}}]};
+		function buildLocation_statichtml(loc) {
+  // Set font styles to appropriate axis locations
+  let rule = document.styleSheets[0].cssRules[2].style;
+  let cssSetting = "";
+  let textLocation = "Default";
+  if (loc.coords) {
+    cssSetting = Object.entries(loc.coords)
+      .map(function ([axis, value]) {
+        return `"${axis}" ${value}`;
+      })
+      .join(", ");
+    textLocation = Object.entries(loc.coords)
+      .map(function ([axis, value]) {
+        return `${axis}=${value}`;
+      })
+      .join(" ");
+    rule.setProperty("font-variation-settings", cssSetting);
+  }
+
+  $("#main").empty();
+
+  $("#title").html(`<h4 class="mt-2">${textLocation}</h2>`);
+
+  if (loc.glyphs) {
+    $("#main").append("<h4>Modified Glyphs</h4>");
+    let glyphs = $("<div>");
+    for (let glyph of loc.glyphs) {
+      addAGlyph(glyph, glyphs);
+    }
+    $("#main").append(glyphs);
+  }
+
+  if (loc.words) {
+    $("#main").append("<h4>Modified Words</h4>");
+    for (let [script, words] of Object.entries(loc.words)) {
+      let scriptTitle = $(`<h6>${script}</h6>`);
+      $("#main").append(scriptTitle);
+      let worddiv = $("<div>");
+      for (let word of words) {
+        addAWord(word, worddiv);
+      }
+      $("#main").append(worddiv);
+    }
+  }
+  $('[data-toggle="tooltip"]').tooltip();
+}
+
+$(function () {
+  if (report["tables"]) {
+    diffTables(report);
+  }
+  if (report["kerns"]) {
+    diffKerns(report);
+  }
+  cmapDiff(report);
+  $('[data-toggle="tooltip"]').tooltip();
+  if (!report["locations"]) {
+    $("#title").html("<h4 class='mt-2'>No differences found</h4>");
+    $("#ui-nav").hide();
+    return;
+  }
+
+  for (var [index, loc] of report["locations"].entries()) {
+    var loc_nav = $(`<li class="nav-item">
+		<a class="nav-link text-secondary" href="#" data-index="${index}">${loc.location.replaceAll(
+      ",",
+      ",\u200b"
+    )}</a>
+	</li>`);
+    $("#locationnav").append(loc_nav);
+  }
+  $("#locationnav li a").on("click", function (e) {
+    $("#locationnav li a").removeClass("active");
+    $(this).addClass("active");
+    buildLocation_statichtml(report.locations[$(this).data("index")]);
+  });
+  $("#locationnav li a").eq(0).click();
+
+  document.styleSheets[0].cssRules[0].style.setProperty(
+    "src",
+    "url(old-NotoSansTaiViet-Regular.ttf)"
+  );
+  document.styleSheets[0].cssRules[1].style.setProperty(
+    "src",
+    "url(new-NotoSansTaiViet-Regular.ttf)"
+  );
+  setupAnimation();
+});
+
+	</script>
+</body>
+
+</html>
